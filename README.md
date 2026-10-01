@@ -21,6 +21,17 @@ npm i
 npm run dev
 ```
 
+## Deploy with Docker (Coolify)
+
+The `Dockerfile` builds a standalone Node server (Nitro `node-server` preset) and serves it on port `3000`.
+
+```sh
+docker build -t firmground .
+docker run -p 3000:3000 firmground
+```
+
+In Coolify: create a resource from this repository, choose the **Dockerfile** build pack, and set the exposed port to `3000`. No environment variables are required. The image includes a health check on `/`.
+
 ## Built with
 
 - TanStack Start
