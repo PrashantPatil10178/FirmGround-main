@@ -258,10 +258,8 @@
 
 .marquee-mask { mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent); }
 
-.hero-field { mask-image: linear-gradient(to bottom, black, transparent 45%); }
-@media (min-width: 1024px) {
-  .hero-field { mask-image: linear-gradient(to right, transparent 30%, black 62%); }
-}
+/* Keep the dot field clear behind the centred hero copy and let it show around the edges. */
+.hero-field { mask-image: radial-gradient(ellipse 62% 58% at 50% 50%, transparent 40%, black 92%); }
 
 .blueprint {
   background-color: var(--surface);

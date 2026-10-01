@@ -252,14 +252,14 @@ function SignalField({ className = "", tone = "text-primary" }: { className?: st
   return <canvas ref={ref} aria-hidden="true" className={`pointer-events-none ${tone} ${className}`} />;
 }
 
-function RotatingWord({ words }: { words: string[] }) {
+function RotatingWord({ words, className = "inline-grid" }: { words: string[]; className?: string }) {
   const [index, setIndex] = useState(0);
   useEffect(() => {
     if (prefersReducedMotion()) return;
     const id = window.setInterval(() => setIndex(i => (i + 1) % words.length), 2400);
     return () => window.clearInterval(id);
   }, [words.length]);
-  return <span className="inline-grid text-primary">{words.map((word, i) => <span key={word} className={`[grid-area:1/1] transition-[opacity,transform] ease-out ${i === index ? "translate-y-0 opacity-100 delay-150 duration-300" : "translate-y-1.5 opacity-0 duration-150"}`}>{word}.</span>)}</span>;
+  return <span className={`${className} text-primary`}>{words.map((word, i) => <span key={word} className={`[grid-area:1/1] transition-[opacity,transform] ease-out ${i === index ? "translate-y-0 opacity-100 delay-150 duration-300" : "translate-y-1.5 opacity-0 duration-150"}`}>{word}.</span>)}</span>;
 }
 
 /* ---------- primitives ---------- */
@@ -365,18 +365,19 @@ function Hero() {
   return <section id="home" className="scroll-mt-20">
     <div className="page-shell frame relative overflow-hidden">
       <SignalField className="hero-field absolute inset-0 h-full w-full" />
-      <div className="relative z-10 max-w-3xl space-y-8 px-4 py-20 sm:px-8 md:py-28 lg:py-32">
+      <div className="relative z-10 mx-auto flex max-w-3xl flex-col items-center space-y-8 px-4 py-20 text-center sm:px-8 md:py-28 lg:py-32">
         <Eyebrow tone="brand">Technology + Digital Growth Partner</Eyebrow>
         <h1 className="text-[2.5rem] font-normal leading-[1.08] tracking-[-0.035em] text-foreground sm:text-[3.25rem] lg:text-[4rem]">
           <span className="sr-only">We build technology. You build the business.</span>
-          <span aria-hidden="true">We build <RotatingWord words={heroWords} /><br />You build the business.</span>
+          {/* The rotating word sits on its own centred line so shorter words don't pull the headline off-centre. */}
+          <span aria-hidden="true">We build<RotatingWord words={heroWords} className="grid justify-items-center" />You build the business.</span>
         </h1>
         <p className="max-w-xl text-lg leading-[1.6] text-muted-foreground">FirmGround helps startups, creators and education businesses build, automate and grow digitally — from websites, apps and custom software to marketing, content and digital growth.</p>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap justify-center gap-3">
           <BracketLink href="#contact">Book a Free Consultation</BracketLink>
           <BracketLink href={`${WHATSAPP_URL}?text=${encodeURIComponent("Hi FirmGround, I'd like to discuss a requirement with your team.")}`} tone="outline" external>Chat on WhatsApp</BracketLink>
         </div>
-        <p className="flex items-center gap-2 font-mono text-xs uppercase tracking-[1.2px] text-tertiary"><ShieldCheck className="size-4 text-success" /> From India, serving businesses globally</p>
+        <p className="flex items-center justify-center gap-2 font-mono text-xs uppercase tracking-[1.2px] text-tertiary"><ShieldCheck className="size-4 text-success" /> From India, serving businesses globally</p>
       </div>
     </div>
   </section>;
